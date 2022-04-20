@@ -41,11 +41,13 @@ fs.readdir("./commands/slash", (err, files) => {
 });
 
 const antiSpam=require("./spam/antispam")
+const partner=require("./partner/partner")
 let set=new Set()
 client.on("messageCreate", msg => {
     //Prefix
     global.prefix = "!";
-
+    if(msg.channel.id==962259478139518986&&!msg.author.bot)return partner(msg)
+    
     if (!msg.content.startsWith(prefix) || msg.author.bot) return antiSpam.spamCheck(msg,set,10000);
 
     const args = msg.content.slice(prefix.length).trim().split(/ +/);
